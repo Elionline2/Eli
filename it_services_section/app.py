@@ -47,8 +47,7 @@ app.config.update(
 )
 
 # Initialize mail
-mail = Mail()
-mail.init_app(app)
+mail = Mail(app)  # Initialize mail with the app instance
 s = URLSafeTimedSerializer(app.secret_key)
 
 # Debug mail configuration
