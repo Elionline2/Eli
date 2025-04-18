@@ -13,7 +13,7 @@ import time
 load_dotenv('it_services_section/manage.env')
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')  # Use environment variable for secret key
 
 # === File Upload Configuration ===
 UPLOAD_FOLDER = 'static/uploads'
@@ -33,12 +33,18 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # === Mail Configuration ===
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.getenv('EMAIL_USER')
-app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_PASS')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('EMAIL_USER')
+app.config.update(
+    MAIL_SERVER=os.getenv('MAIL_SERVER', 'smtp.gmail.com'),
+    MAIL_PORT=int(os.getenv('MAIL_PORT', '587')),
+    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS', 'True').lower() == 'true',
+    MAIL_USE_SSL=os.getenv('MAIL_USE_SSL', 'False').lower() == 'true',
+    MAIL_USERNAME=os.getenv('EMAIL_USER'),
+    MAIL_PASSWORD=os.getenv('EMAIL_PASS'),
+    MAIL_DEFAULT_SENDER=os.getenv('EMAIL_USER'),
+    MAIL_MAX_EMAILS=None,
+    MAIL_ASCII_ATTACHMENTS=False,
+    MAIL_DEBUG=os.getenv('FLASK_ENV') == 'development'
+)
 
 # Initialize mail
 mail = Mail()
@@ -46,14 +52,19 @@ mail.init_app(app)
 s = URLSafeTimedSerializer(app.secret_key)
 
 # Debug mail configuration
-print("Mail Configuration:")
-print(f"MAIL_USERNAME: {app.config['MAIL_USERNAME']}")
-print(f"MAIL_PASSWORD: {'*' * len(app.config['MAIL_PASSWORD']) if app.config['MAIL_PASSWORD'] else 'Not set'}")
-print(f"MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
+if os.getenv('FLASK_ENV') == 'development':
+    print("Mail Configuration:")
+    print(f"MAIL_SERVER: {app.config['MAIL_SERVER']}")
+    print(f"MAIL_PORT: {app.config['MAIL_PORT']}")
+    print(f"MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
+    print(f"MAIL_USE_SSL: {app.config['MAIL_USE_SSL']}")
+    print(f"MAIL_USERNAME: {app.config['MAIL_USERNAME']}")
+    print(f"MAIL_PASSWORD: {'*' * len(app.config['MAIL_PASSWORD']) if app.config['MAIL_PASSWORD'] else 'Not set'}")
+    print(f"MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
 
 # === Admin Credentials ===
-ADMIN_EMAIL = 'admin@site.com'
-ADMIN_PASSWORD = 'admin123'
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@site.com')
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
 
 # === Create database directory if not exists ===
 os.makedirs('database', exist_ok=True)
