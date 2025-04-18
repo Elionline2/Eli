@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}KRA History - Elias' IT Services{% endblock %}
+{% block title %}Service History - Elias' IT Services{% endblock %}
 
 {% block body_class %}history-page{% endblock %}
 
@@ -14,25 +14,29 @@
             </a>
             <h2 class="section-title" style="color: #FFA500;">
                 <i class="fas fa-history"></i>
-                KRA Registration History
+                Service Request History
             </h2>
         </div>
         <div class="card-body">
-            {% if kra_history %}
+            {% if kra_history or typesetting_history %}
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Service</th>
+                                <th>Service Type</th>
+                                <th>Details</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- KRA Registrations -->
                             {% for reg in kra_history %}
                                 <tr>
                                     <td>{{ reg[11] }}</td>
                                     <td>KRA Registration</td>
+                                    <td>{{ reg[2] }} (ID: {{ reg[3] }})</td>
                                     <td>
                                         {% if reg[10] == 'pending' %}
                                             <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ reg[10]|title }}</span>
@@ -44,7 +48,151 @@
                                             <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ reg[10]|title }}</span>
                                         {% endif %}
                                     </td>
+                                    <td>
+                                        <button class="details-btn" onclick="showDetails('kra', {{ reg[0] }})">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
                                 </tr>
+                                <!-- KRA Details Modal -->
+                                <div id="details-kra-{{ reg[0] }}" class="details-modal">
+                                    <div class="modal-content">
+                                        <span class="close-btn" onclick="closeDetails('kra', {{ reg[0] }})">&times;</span>
+                                        <h3>KRA Registration Details</h3>
+                                        <div class="details-grid">
+                                            <div class="detail-item">
+                                                <span class="detail-label">Full Name:</span>
+                                                <span class="detail-value">{{ reg[2] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Date of Birth:</span>
+                                                <span class="detail-value">{{ reg[3] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">ID Number:</span>
+                                                <span class="detail-value">{{ reg[4] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">County:</span>
+                                                <span class="detail-value">{{ reg[5] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Town:</span>
+                                                <span class="detail-value">{{ reg[6] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">P.O. Box:</span>
+                                                <span class="detail-value">{{ reg[7] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Email:</span>
+                                                <span class="detail-value">{{ reg[8] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Phone:</span>
+                                                <span class="detail-value">{{ reg[9] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Transaction Code:</span>
+                                                <span class="detail-value">{{ reg[10] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Status:</span>
+                                                <span class="detail-value">
+                                                    {% if reg[11] == 'pending' %}
+                                                        <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ reg[11]|title }}</span>
+                                                    {% elif reg[11] == 'processing' %}
+                                                        <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ reg[11]|title }}</span>
+                                                    {% elif reg[11] == 'completed' %}
+                                                        <span class="status-badge" style="background-color: #012935; color: #FFA500;">{{ reg[11]|title }}</span>
+                                                    {% else %}
+                                                        <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ reg[11]|title }}</span>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Submission Date:</span>
+                                                <span class="detail-value">{{ reg[12] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            <!-- Typesetting Requests -->
+                            {% for req in typesetting_history %}
+                                <tr>
+                                    <td>{{ req[9] }}</td>
+                                    <td>Typesetting</td>
+                                    <td>{{ req[2] }} ({{ req[4] }})</td>
+                                    <td>
+                                        {% if req[8] == 'pending' %}
+                                            <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ req[8]|title }}</span>
+                                        {% elif req[8] == 'processing' %}
+                                            <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ req[8]|title }}</span>
+                                        {% elif req[8] == 'completed' %}
+                                            <span class="status-badge" style="background-color: #012935; color: #FFA500;">{{ req[8]|title }}</span>
+                                        {% else %}
+                                            <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ req[8]|title }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="details-btn" onclick="showDetails('typesetting', {{ req[0] }})">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Typesetting Details Modal -->
+                                <div id="details-typesetting-{{ req[0] }}" class="details-modal">
+                                    <div class="modal-content">
+                                        <span class="close-btn" onclick="closeDetails('typesetting', {{ req[0] }})">&times;</span>
+                                        <h3>Typesetting Request Details</h3>
+                                        <div class="details-grid">
+                                            <div class="detail-item">
+                                                <span class="detail-label">Full Name:</span>
+                                                <span class="detail-value">{{ req[2] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Email:</span>
+                                                <span class="detail-value">{{ req[3] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Phone:</span>
+                                                <span class="detail-value">{{ req[4] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Document Type:</span>
+                                                <span class="detail-value">{{ req[5] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Document File:</span>
+                                                <span class="detail-value">{{ req[6] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Transaction Code:</span>
+                                                <span class="detail-value">{{ req[7] }}</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Status:</span>
+                                                <span class="detail-value">
+                                                    {% if req[8] == 'pending' %}
+                                                        <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ req[8]|title }}</span>
+                                                    {% elif req[8] == 'processing' %}
+                                                        <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ req[8]|title }}</span>
+                                                    {% elif req[8] == 'completed' %}
+                                                        <span class="status-badge" style="background-color: #012935; color: #FFA500;">{{ req[8]|title }}</span>
+                                                    {% else %}
+                                                        <span class="status-badge" style="background-color: #FFA500; color: #012935;">{{ req[8]|title }}</span>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Submission Date:</span>
+                                                <span class="detail-value">{{ req[9] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -52,7 +200,7 @@
             {% else %}
                 <div class="text-center">
                     <i class="fas fa-info-circle" style="color: #FFA500; font-size: 3rem;"></i>
-                    <p style="color: #FFA500;">No KRA registration history found</p>
+                    <p style="color: #FFA500;">No service requests found</p>
                 </div>
             {% endif %}
         </div>
@@ -201,5 +349,110 @@
         padding-top: 1rem;
     }
 }
+
+/* Modal Styles */
+.details-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #012935;
+    margin: 5% auto;
+    padding: 2rem;
+    border: 1px solid #FFA500;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px;
+    color: #FFA500;
+}
+
+.close-btn {
+    color: #FFA500;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #ff9b30;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #FFA500;
+}
+
+.detail-value {
+    color: #fff;
+}
+
+.details-btn {
+    background-color: #FFA500;
+    color: #012935;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.details-btn:hover {
+    background-color: #ff9b30;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 1rem;
+    }
+    
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
+
+<script>
+function showDetails(type, id) {
+    document.getElementById(`details-${type}-${id}`).style.display = 'block';
+}
+
+function closeDetails(type, id) {
+    document.getElementById(`details-${type}-${id}`).style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('details-modal')) {
+        event.target.style.display = 'none';
+    }
+}
+</script>
 {% endblock %} 
