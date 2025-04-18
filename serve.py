@@ -11,25 +11,34 @@ app = Flask(__name__,
             static_folder='it_services_section/static',
             template_folder='it_services_section/templates')
 
-# Copy configuration from it_services_app
-app.config.update(it_services_app.config)
-
 # Set secret key for session management
 app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')
+
+# Explicitly set email configuration
+app.config.update(
+    MAIL_SERVER=os.getenv('MAIL_SERVER', 'smtp.gmail.com'),
+    MAIL_PORT=int(os.getenv('MAIL_PORT', '587')),
+    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS', 'True').lower() == 'true',
+    MAIL_USE_SSL=os.getenv('MAIL_USE_SSL', 'False').lower() == 'true',
+    MAIL_USERNAME=os.getenv('EMAIL_USER'),
+    MAIL_PASSWORD=os.getenv('EMAIL_PASS'),
+    MAIL_DEFAULT_SENDER=os.getenv('EMAIL_USER'),
+    MAIL_MAX_EMAILS=None,
+    MAIL_ASCII_ATTACHMENTS=False
+)
 
 # Initialize mail for the main app
 mail.init_app(app)
 
-# Debug mail configuration in development
-if os.getenv('FLASK_ENV') == 'development':
-    print("Mail Configuration:")
-    print(f"MAIL_SERVER: {app.config['MAIL_SERVER']}")
-    print(f"MAIL_PORT: {app.config['MAIL_PORT']}")
-    print(f"MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
-    print(f"MAIL_USE_SSL: {app.config['MAIL_USE_SSL']}")
-    print(f"MAIL_USERNAME: {app.config['MAIL_USERNAME']}")
-    print(f"MAIL_PASSWORD: {'*' * len(app.config['MAIL_PASSWORD']) if app.config['MAIL_PASSWORD'] else 'Not set'}")
-    print(f"MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
+# Debug mail configuration
+print("Mail Configuration:")
+print(f"MAIL_SERVER: {app.config['MAIL_SERVER']}")
+print(f"MAIL_PORT: {app.config['MAIL_PORT']}")
+print(f"MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
+print(f"MAIL_USE_SSL: {app.config['MAIL_USE_SSL']}")
+print(f"MAIL_USERNAME: {app.config['MAIL_USERNAME']}")
+print(f"MAIL_PASSWORD: {'*' * len(app.config['MAIL_PASSWORD']) if app.config['MAIL_PASSWORD'] else 'Not set'}")
+print(f"MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
 
 # Main static index page
 @app.route('/')
