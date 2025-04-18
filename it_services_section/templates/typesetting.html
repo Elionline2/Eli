@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Typesetting Service - Elias' IT Services{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="header-top">
+                <a href="/dashboard" class="btn btn-link">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+            <h1 class="auth-title">
+                <i class="fas fa-file-word"></i>
+                Typesetting Service
+            </h1>
+            <p class="auth-subtitle">Upload your document for professional typesetting</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="auth-messages">
+                    {% for category, message in messages %}
+                        <div class="auth-message auth-message-{{ category }}">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="auth-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-upload"></i>
+                    <input type="file" name="document_file" accept="*/*" required>
+                </div>
+            </div>
+
+            <div class="payment-instructions">
+                <h3>Payment Instructions</h3>
+                <ol>
+                    <li>Upload your document</li>
+                    <li>Send KSH 50 to M-Pesa number: 0703973225</li>
+                    <li>Enter the transaction code you receive</li>
+                    <li>Click Submit to complete your request</li>
+                </ol>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-receipt"></i>
+                    <input type="text" name="transaction_code" placeholder="Enter M-Pesa Transaction Code" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Submit Request
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %} 

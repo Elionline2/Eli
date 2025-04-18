@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Elias' IT Services{% endblock %}
+
+{% block body_class %}admin-page{% endblock %}
+
+{% block header %}
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <h1 class="admin-logo">
+                <i class="fas fa-shield-alt"></i> ELITE ADMIN PANEL
+            </h1>
+            <a href="/logout" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="admin-dashboard">
+        <section class="admin-welcome">
+            <h2 class="welcome-title">Hello, Admin <i class="fas fa-hand-wave"></i></h2>
+            <p class="welcome-subtitle">Manage your users, services, and more from this powerful panel.</p>
+        </section>
+
+        <section class="admin-features">
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">User Management</h3>
+                    <p class="card-description">View, delete or manage all registered users.</p>
+                    <a href="/admin/users" class="btn btn-primary">
+                        <i class="fas fa-cog"></i> Manage Users
+                    </a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Services</h3>
+                    <p class="card-description">Update service info, add or remove services.</p>
+                    <a href="/admin/services" class="btn btn-primary">
+                        <i class="fas fa-cog"></i> Manage Services
+                    </a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Add New Service</h3>
+                    <p class="card-description">Create and publish a new IT service to offer.</p>
+                    <a href="/admin/services/add" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Service
+                    </a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <i class="fas fa-file-alt card-icon"></i>
+                <h3>KRA Registrations</h3>
+                <p>View and manage KRA registration requests</p>
+                <a href="{{ url_for('admin_kra_registrations') }}" class="btn btn-primary">View Registrations</a>
+            </div>
+
+            <div class="admin-card">
+                <i class="fas fa-file-word card-icon"></i>
+                <h3>Typesetting Requests</h3>
+                <p>View and manage document typesetting requests</p>
+                <a href="{{ url_for('admin_typesetting') }}" class="btn btn-primary">View Requests</a>
+            </div>
+        </section>
+    </div>
+{% endblock %}

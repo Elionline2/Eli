@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Typesetting Requests - Admin Dashboard{% endblock %}
+
+{% block body_class %}admin-page{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="admin-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-file-word"></i>
+                Typesetting Requests
+            </h2>
+            <p class="section-description">View and manage typesetting requests</p>
+            <a href="/admin-dashboard" class="btn btn-primary back-to-dashboard">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Document</th>
+                        <th>Transaction Code</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if typesetting_requests %}
+                        {% for req in typesetting_requests %}
+                            <tr>
+                                <td>{{ req[0] }}</td>
+                                <td>
+                                    {{ req[7] }} {{ req[8] }}<br>
+                                    <small>{{ req[9] }}</small>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('static', filename='uploads/' + req[3]) }}" target="_blank">
+                                        <i class="fas fa-file-download"></i> Download
+                                    </a>
+                                </td>
+                                <td>{{ req[4] }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ req[5] }}">
+                                        {{ req[5]|title }}
+                                    </span>
+                                </td>
+                                <td>{{ req[6] }}</td>
+                                <td class="actions-cell">
+                                    <form method="POST" action="{{ url_for('update_typesetting_status', req_id=req[0]) }}" class="status-form">
+                                        <select name="status" class="status-select" onchange="this.form.submit()">
+                                            <option value="pending" {% if req[5] == 'pending' %}selected{% endif %}>Pending</option>
+                                            <option value="processing" {% if req[5] == 'processing' %}selected{% endif %}>Processing</option>
+                                            <option value="completed" {% if req[5] == 'completed' %}selected{% endif %}>Completed</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="no-data">
+                                <i class="fas fa-info-circle"></i>
+                                <p>No typesetting requests found</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

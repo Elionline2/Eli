@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Service - Elias' IT Services{% endblock %}
+
+{% block body_class %}admin-page{% endblock %}
+
+{% block header %}
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <a href="/admin/services" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to Services
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="admin-container">
+        <section class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i> Add New Service
+                </h2>
+                <p class="section-description">
+                    Fill in the details below to add a new service to the platform.
+                </p>
+            </div>
+
+            <form method="POST" class="admin-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Service Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter service title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Service Description</label>
+                    <textarea id="description" name="description" placeholder="Enter detailed service description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price (KSH)</label>
+                    <input type="text" id="price" name="price" placeholder="Enter price in KSH" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="photo">Service Photo</label>
+                    <input type="file" id="photo" name="photo" accept="image/*" required>
+                    <small>Upload a photo for the service (PNG, JPG, JPEG, GIF)</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Add Service
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Elias' IT Services{% endblock %}
+
+{% block body_class %}landing-page{% endblock %}
+
+{% block content %}
+    <div class="landing-container">
+        <div class="landing-content">
+            <h1 class="landing-title">
+                <span class="highlight">Elias'</span> Online Cyber Services
+            </h1>
+            <p class="landing-description">
+                Professional IT solutions tailored to your needs. From cybersecurity to system maintenance, we've got you covered.
+            </p>
+            <div class="landing-features">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Cybersecurity</h3>
+                    <p>Protect your digital assets with our advanced security solutions</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-tools"></i>
+                    <h3>System Maintenance</h3>
+                    <p>Keep your systems running smoothly with our expert maintenance</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock assistance for all your IT needs</p>
+                </div>
+            </div>
+            <a href="/services" class="btn btn-primary btn-lg">
+                <i class="fas fa-list"></i> View Our Services
+            </a>
+        </div>
+    </div>
+{% endblock %}
+

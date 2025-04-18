@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elias Mwangi - Creative Professional</title>
+    <meta name="description" content="Portfolio of Elias Mwangi - Graphic Designer, Web Developer, Photographer">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Pacifico&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/whatsappstyle.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/showroom1.css">
+    <style>
+      :root {
+        --primary-color: #012935;
+        --secondary-color: #FFA500;
+        --accent-color: #ff9b30;
+        --dark-bg: #001F2B;
+        --light-text: #FDF3E7;
+        --text-color: #ccc;
+        --white: #ffffff;
+        --transition: all 0.3s ease-in-out;
+      }
+    
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+      }
+    
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 2rem;
+      }
+    
+      h1 {
+        text-align: center;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+      }
+    
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns by default */
+        gap: 1.5rem;
+      }
+    
+      .card {
+        background: var(--primary-color);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        transition: var(--transition);
+        cursor: pointer;
+      }
+    
+      .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+    
+      .card-body {
+        padding: 1rem;
+      }
+    
+      .card-body h3 {
+        margin-top: 0;
+        color: var(--accent-color);
+        font-size: 1.1rem;
+      }
+    
+      .card-body p {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--text-color);
+      }
+    
+      .modal {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        padding: 2rem;
+      }
+    
+      .modal-content {
+        background: var(--dark-bg);
+        max-width: 800px;
+        width: 100%;
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+      }
+    
+      .modal-content img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 10px;
+      }
+    
+      .modal-content h3 {
+        margin-top: 1rem;
+        color: var(--accent-color);
+      }
+    
+      .modal-content p {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+      }
+    
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2rem;
+        color: var(--white);
+        cursor: pointer;
+      }
+    
+      /* ✅ Responsive Layout: One column on small screens */
+      @media (max-width: 768px) {
+        .gallery {
+          grid-template-columns: 1fr; /* 👈 Switch to single column */
+        }
+    
+        .card img {
+          height: 160px;
+        }
+    
+        .modal-content {
+          padding: 1rem;
+        }
+    
+        .modal-content img {
+          max-height: 300px;
+        }
+      }
+    
+      @media (max-width: 480px) {
+        .container {
+          padding: 1rem;
+        }
+    
+        h1 {
+          font-size: 1.5rem;
+        }
+    
+        .card-body h3 {
+          font-size: 1rem;
+        }
+    
+        .card-body p,
+        .modal-content p {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+    
+</head>
+<body>
+
+        <!-- Loader -->
+        <div id="loader">
+          <div class="loader-content">
+              <div class="spinner"></div>
+              <p>Please wait...</p>
+          </div>
+      </div>
+
+    <a href="index.html#showroom" class="back-btn">← Back to Dashboard</a>
+    
+  <div class="container">
+    <h1>Forex Trading Concepts</h1>
+    <div class="gallery" id="gallery">
+
+        <!-- Card 1 -->
+        <div class="card" onclick="openModal('images/doji candle.png', 'Doji Candle', 'A Doji candlestick pattern forms when the opening and closing prices are very close or equal, signaling indecision in the market. This often occurs during trend reversals, as market participants struggle to establish the next direction. Traders often look for confirmation with subsequent price action to confirm the reversal.')">
+          <img src="images/doji candle.png" alt="Doji Candle">
+          <div class="card-body">
+            <h3>Doji Candle</h3>
+            <p>The Doji candlestick pattern signifies indecision between buyers and sellers. When the opening and closing prices are nearly the same, it suggests a balance between the forces of supply and demand. This pattern often signals that a reversal may be imminent, especially in the context of an established trend.</p>
+          </div>
+        </div>
+      
+        <!-- Card 2 -->
+        <div class="card" onclick="openModal('images/session.png', 'Forex Market Sessions', 'The forex market operates 24 hours a day, divided into four major trading sessions: Sydney, Tokyo, London, and New York. Each session has its characteristics, with different levels of volatility and trading volume. Understanding the market sessions can help traders identify times of increased liquidity and potential opportunities for profitable trades.')">
+          <img src="images/session.png" alt="Forex Sessions">
+          <div class="card-body">
+            <h3>Market Sessions</h3>
+            <p>The forex market is open 24 hours a day, and it is divided into four major trading sessions: Sydney, Tokyo, London, and New York. Each session has its own market dynamics, with varying levels of liquidity, volatility, and trading activity. The overlap of sessions, especially between London and New York, is when the market is most active and presents higher trading opportunities.</p>
+          </div>
+        </div>
+      
+        <!-- Card 3 -->
+        <div class="card" onclick="openModal('images/images/support-resistance-basics.png', 'Support & Resistance', 'Support and resistance are key concepts in technical analysis. Support refers to a price level where demand is strong enough to prevent the price from falling further, while resistance is where selling pressure prevents the price from rising further. These levels help traders identify potential entry and exit points and are used to spot trend reversals or confirm trend continuations.')">
+          <img src="images/support-resistance-basics.png" alt="Support and Resistance">
+          <div class="card-body">
+            <h3>Support & Resistance</h3>
+            <p>Support and resistance levels are fundamental concepts in technical analysis. Support is a price level where demand is strong enough to prevent further decline, while resistance is a level where selling pressure halts upward movement. These levels help traders pinpoint key price zones for potential buy or sell opportunities and are often used to identify trend reversals or trend continuation signals.</p>
+          </div>
+        </div>
+      
+        <!-- Card 4 -->
+        <div class="card" onclick="openModal('images/trendline.png', 'Trendlines', 'Trendlines are drawn on charts to connect higher lows in an uptrend or lower highs in a downtrend, helping to visualize the market direction. By using trendlines, traders can identify key levels of support or resistance, assess the strength of a trend, and determine when to enter or exit trades based on potential breakout or breakdown points.')">
+          <img src="images/trendline.png" alt="Trendlines">
+          <div class="card-body">
+            <h3>Trendlines</h3>
+            <p>Trendlines are a vital tool in technical analysis, used to connect price highs in a downtrend or price lows in an uptrend. These lines act as dynamic levels of support or resistance and help traders visualize the direction of the market. By assessing the angle and position of the trendline, traders can gauge the strength of the trend and make informed decisions on potential breakouts or trend continuation.</p>
+          </div>
+        </div>
+      
+      </div>
+      
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <img id="modalImg" src="" alt="Forex Concept">
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+  
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <p><i class="fa fa-envelope"></i> mwauraelias25@gmail.com</p>
+                <p><i class="fa fa-phone"></i> +254 703 973 225</p>
+
+                <a href="files/ELIAS CV1.pdf" download>
+                    <button class="download_btn">Download CV</button>
+                  </a>
+                  
+                <div class="social-icons">
+                  <a href="https://www.facebook.com/p.r.i.n.c.e.m.i.k.e.e.G" target="_blank" class="fa-brands fa-facebook" aria-label="Facebook"></a>
+                  <a href="https://www.youtube.com/@itsmike254" target="_blank" class="fa-brands fa-youtube" aria-label="YouTube"></a>
+                  <a href="https://www.instagram.com/p.r.i.n.ce.m.i.k.e" target="_blank" class="fa-brands fa-instagram" aria-label="Instagram"></a>
+                  <a href="https://www.tiktok.com/@princemike3.4" target="_blank" class="fa-brands fa-tiktok" aria-label="TikTok"></a>
+                  <a href="https://wa.me/0703973225" target="_blank" class="fa-brands fa-whatsapp" aria-label="WhatsApp"></a>
+                </div>
+            </div>
+            <form class="contact-form" method="post" data-netlify="true">
+                <input type="text" placeholder="Your Name" name="fullName" required>
+                <input type="email" placeholder="Your Email" name="emailAddress" required>
+                <textarea placeholder="Your Message" name="messageInput" required></textarea>
+                <button type="submit" class="btn primary-btn">Send Message</button>
+            </form>
+            
+        </div>
+    </section>
+
+
+  <script>
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+
+    function openModal(imgSrc, title, desc) {
+      modalImg.src = imgSrc;
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  </script>
+<script src="js/script.js"></script>
+</body>
+</html>

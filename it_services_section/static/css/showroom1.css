@@ -1,0 +1,150 @@
+
+    /* Theme Colors */
+:root {
+    --primary-color: #012935;
+    --secondary-color: #FFA500;
+    --accent-color: #ff9b30;
+    --dark-bg: #001F2B;
+    --light-text: #FDF3E7;
+    --text-color: #333;
+    --white: #ffffff;
+    --transition: all 0.3s ease-in-out;
+}
+
+/* General Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--dark-bg);
+    color: var(--light-text);
+}
+
+#portfolio {
+    text-align: center;
+    padding: 50px;
+}
+
+#portfolio h2 {
+    color: var(--secondary-color);
+    font-family: 'Pacifico', cursive;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.portfolio-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Project Box */
+.project {
+    background: var(--primary-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+    gap: 20px;
+    transition: var(--transition);
+}
+
+.project:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 10px rgba(255, 165, 0, 0.3);
+}
+
+/* Image Container (Side by Side) */
+.project-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-images img {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.desktop-view {
+    width: 70%;
+    max-height: 250px;
+    object-fit: cover;
+}
+
+.mobile-view {
+    width: 25%;
+    max-height: 250px;
+    object-fit: cover;
+}
+
+/* Project Info */
+.project-info {
+    text-align: left;
+}
+
+.project-info h3 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.project-info p {
+    color: var(--light-text);
+    opacity: 0.9;
+}
+
+.project-info a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: var(--secondary-color);
+    color: var(--dark-bg);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.project-info a:hover {
+    background: var(--accent-color);
+    color: var(--white);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .project {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .project-info {
+        text-align: center;
+    }
+
+    .project-images {
+        flex-direction: row;
+    }
+
+    .desktop-view {
+        width: 65%;
+    }
+
+    .mobile-view {
+        width: 30%;
+    }
+}
+
+@media (max-width: 600px) {
+    .project-images {
+        flex-direction: column;
+    }
+
+    .desktop-view, .mobile-view {
+        width: 90%;
+    }
+}
+

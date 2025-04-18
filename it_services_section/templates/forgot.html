@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Forgot Password - Elias' IT Services{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">
+                <i class="fas fa-key"></i>
+                Forgot Password
+            </h1>
+            <p class="auth-subtitle">Enter your email to reset your password</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="auth-messages">
+                    {% for category, message in messages %}
+                        <div class="auth-message auth-message-{{ category }}">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Enter your registered email" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Reset Link
+                </button>
+            </div>
+
+            <div class="auth-footer">
+                <a href="{{ url_for('login') }}" class="btn-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Login
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

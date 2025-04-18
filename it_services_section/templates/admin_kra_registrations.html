@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}KRA Registrations - Admin Dashboard{% endblock %}
+
+{% block body_class %}admin-page{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="admin-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-file-alt"></i>
+                KRA Registration Submissions
+            </h2>
+            <p class="section-description">View and manage KRA registration requests</p>
+            <a href="/admin-dashboard" class="btn btn-primary back-to-dashboard">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Full Name</th>
+                        <th>ID Number</th>
+                        <th>County</th>
+                        <th>Phone</th>
+                        <th>Transaction Code</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if registrations %}
+                        {% for reg in registrations %}
+                            <tr>
+                                <td>{{ reg[0] }}</td>
+                                <td>{{ reg[12] }} {{ reg[13] }}<br><small>{{ reg[14] }}</small></td>
+                                <td>{{ reg[1] }}</td>
+                                <td>{{ reg[3] }}</td>
+                                <td>{{ reg[4] }}</td>
+                                <td>{{ reg[8] }}</td>
+                                <td>{{ reg[9] }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ reg[10] }}">
+                                        {{ reg[10]|title }}
+                                    </span>
+                                </td>
+                                <td>{{ reg[11] }}</td>
+                                <td class="actions-cell">
+                                    <form method="POST" action="{{ url_for('update_kra_registration_status', reg_id=reg[0]) }}" class="status-form">
+                                        <select name="status" class="status-select" onchange="this.form.submit()">
+                                            <option value="pending" {% if reg[10] == 'pending' %}selected{% endif %}>Pending</option>
+                                            <option value="processing" {% if reg[10] == 'processing' %}selected{% endif %}>Processing</option>
+                                            <option value="completed" {% if reg[10] == 'completed' %}selected{% endif %}>Completed</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="10" class="no-data">
+                                <i class="fas fa-info-circle"></i>
+                                <p>No KRA registration submissions found</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

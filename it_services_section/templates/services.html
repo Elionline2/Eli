@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Elias' IT Services{% endblock %}
+
+{% block body_class %}services-page{% endblock %}
+
+{% block content %}
+    <div class="services-wrapper">
+        <!-- Back Button -->
+        <div class="services-back-btn-container">
+            <a href="/" class="services-back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+
+        <div class="services-hero">
+            <h1 class="services-main-title">
+                <i class="fas fa-cogs"></i> Our Services
+            </h1>
+            <p class="services-hero-text">
+                Explore our range of professional IT solutions tailored to your needs
+            </p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="services-messages">
+                    {% for category, message in messages %}
+                        <div class="services-message services-message-{{ category }}">
+                            <i class="fas fa-info-circle"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="services-cards-container">
+            {% for service in services %}
+                <div class="service-item">
+                    <div class="service-item-image">
+                        {% if service[4] %}
+                            <img src="{{ url_for('static', filename='uploads/' + service[4]) }}" alt="{{ service[1] }}" loading="lazy">
+                        {% else %}
+                            <div class="service-item-placeholder">
+                                <i class="fas fa-image"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="service-item-content">
+                        <h3 class="service-item-title">{{ service[1] }}</h3>
+                        <p class="service-item-description">{{ service[2] }}</p>
+                        <div class="service-item-price">{{ service[3] }}</div>
+                        {% if session.user %}
+                            {% if service[1] == 'Type Setting' %}
+                                <a href="{{ url_for('typesetting') }}" class="service-item-action-btn">
+                                    <i class="fas fa-file-word"></i> Get Service
+                                </a>
+                            {% elif service[1] == 'KRA Registration' %}
+                                <a href="{{ url_for('kra_registration') }}" class="service-item-action-btn">
+                                    <i class="fas fa-file-alt"></i> Register Now
+                                </a>
+                            {% else %}
+                                <a href="https://wa.me/0703973225" target="_blank" class="service-item-action-btn">
+                                    <i class="fab fa-whatsapp"></i> Get Service
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a href="/login" class="service-item-action-btn">
+                                <i class="fas fa-sign-in-alt"></i> Login to Get Service
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

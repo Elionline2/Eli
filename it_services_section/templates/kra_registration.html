@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}KRA Registration - Elias' IT Services{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">
+                <i class="fas fa-file-alt"></i>
+                KRA Registration
+            </h1>
+            <p class="auth-subtitle">Fill in your details to register for KRA services</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="auth-messages">
+                    {% for category, message in messages %}
+                        <div class="auth-message auth-message-{{ category }}">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="fullname" placeholder="Full Name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-birthday-cake"></i>
+                    <input type="date" name="dob" placeholder="Date of Birth" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" name="id_number" placeholder="ID Number" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" name="county" placeholder="County" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-city"></i>
+                    <input type="text" name="town" placeholder="Town" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" name="po_box" placeholder="P.O Box" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                </div>
+            </div>
+
+            <div class="payment-instructions">
+                <h3>Payment Instructions</h3>
+                <p>Please make payment via M-Pesa Send Money to:</p>
+                <div class="payment-details">
+                    <p><strong>Phone Number:</strong> 0703973225</p>
+                    <p><strong>Amount:</strong> KES 150</p>
+                </div>
+                <p class="note">After payment, enter your transaction code below:</p>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-receipt"></i>
+                    <input type="text" name="transaction_code" placeholder="Enter M-Pesa Transaction Code" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Registration
+                </button>
+            </div>
+
+            <div class="auth-footer">
+                <a href="{{ url_for('dashboard') }}" class="btn-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

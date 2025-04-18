@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile - Elias' IT Services{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2 class="auth-title">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </h2>
+                <p class="auth-subtitle">
+                    Update your personal information
+                </p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flashes">
+                        {% for category, message in messages %}
+                            <div class="flash flash-{{ category }}">
+                                <i class="fas fa-info-circle"></i> {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="auth-form" enctype="multipart/form-data">
+                <div class="profile-picture-section">
+                    <div class="current-picture">
+                        {% if user[6] %}
+                            <img src="{{ url_for('static', filename='uploads/' + user[6]) }}" alt="Profile Picture" id="current-profile-pic">
+                        {% else %}
+                            <div class="default-picture">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="profile_picture">Profile Picture</label>
+                        <div class="input-group">
+                            <i class="fas fa-camera"></i>
+                            <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+                        </div>
+                        <small>Upload a new profile picture (JPG, PNG, GIF)</small>
+                    </div>
+                </div>
+
+                <input type="hidden" name="cropped_image" id="cropped-image-input">
+
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="firstname" name="firstname" value="{{ user[1] }}" placeholder="Enter your first name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="lastname" name="lastname" value="{{ user[2] }}" placeholder="Enter your last name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <div class="input-group">
+                        <i class="fas fa-venus-mars"></i>
+                        <input type="text" id="gender" name="gender" value="{{ user[3] }}" placeholder="Enter your gender" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" value="{{ user[4] }}" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+</form>
+
+            <div class="auth-footer">
+                <a href="/dashboard" class="btn btn-link">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const profilePictureInput = document.getElementById('profile_picture');
+    const croppedImageInput = document.getElementById('cropped-image-input');
+    const currentProfilePic = document.getElementById('current-profile-pic');
+
+    profilePictureInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Create a canvas for cropping
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set canvas size to 300x300
+                    canvas.width = 300;
+                    canvas.height = 300;
+                    
+                    // Calculate the center crop
+                    const size = Math.min(img.width, img.height);
+                    const x = (img.width - size) / 2;
+                    const y = (img.height - size) / 2;
+                    
+                    // Draw the cropped image
+                    ctx.drawImage(img, x, y, size, size, 0, 0, 300, 300);
+                    
+                    // Convert to base64 and update the preview
+                    const croppedDataUrl = canvas.toDataURL('image/jpeg');
+                    croppedImageInput.value = croppedDataUrl;
+                    
+                    if (currentProfilePic) {
+                        currentProfilePic.src = croppedDataUrl;
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Donate - Elias' IT Services{% endblock %}
+
+{% block body_class %}donate-page{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0 text-center">Support Our Services</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-center mb-4">Your support helps us continue providing quality IT services. Choose your preferred donation method below.</p>
+                    
+                    <!-- M-Pesa Option -->
+                    <div class="donation-option mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-center mb-4">
+                                    <i class="fas fa-mobile-alt me-2"></i>M-Pesa Donation
+                                </h3>
+                                <div class="steps">
+                                    <div class="step mb-3">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h5>Open M-Pesa</h5>
+                                            <p>Go to your M-Pesa menu on your phone</p>
+                                        </div>
+                                    </div>
+                                    <div class="step mb-3">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h5>Select "Send Money"</h5>
+                                            <p>Choose the "Send Money" option from the menu</p>
+                                        </div>
+                                    </div>
+                                    <div class="step mb-3">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h5>Enter Number</h5>
+                                            <p>Enter the number: <span class="highlight">0703973225</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="step mb-3">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content">
+                                            <h5>Enter Amount</h5>
+                                            <p>Enter the amount you wish to donate</p>
+                                        </div>
+                                    </div>
+                                    <div class="step">
+                                        <div class="step-number">5</div>
+                                        <div class="step-content">
+                                            <h5>Complete Transaction</h5>
+                                            <p>Enter your M-Pesa PIN and confirm the transaction</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PayPal Option -->
+                    <div class="donation-option">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-center mb-3">
+                                    <i class="fab fa-paypal me-2"></i>PayPal Donation
+                                </h3>
+                                <div class="text-center">
+                                    <p>Send your donation to:</p>
+                                    <p class="email-address">mwauraelias25@gmail.com</p>
+                                    <a href="https://www.paypal.com" target="_blank" class="btn btn-primary mt-3">
+                                        <i class="fab fa-paypal me-2"></i>Donate via PayPal
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Back to Dashboard Button -->
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.donate-page {
+    background-color: #f8f9fa;
+    padding-top: 60px;
+}
+
+.donation-option .card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.donation-option .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.steps {
+    padding: 0 20px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.step:last-child {
+    margin-bottom: 0;
+}
+
+.step-number {
+    background-color: #007bff;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex-grow: 1;
+}
+
+.step-content h5 {
+    color: #007bff;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.step-content p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+.highlight {
+    background-color: #e9ecef;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.email-address {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+    word-break: break-all;
+    background-color: #e9ecef;
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 10px 25px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+@media (max-width: 768px) {
+    .steps {
+        padding: 0 10px;
+    }
+    
+    .step {
+        padding: 12px;
+    }
+    
+    .step-number {
+        width: 25px;
+        height: 25px;
+        font-size: 0.9rem;
+    }
+}
+</style>
+{% endblock %} 

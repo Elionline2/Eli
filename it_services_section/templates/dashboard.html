@@ -1,0 +1,459 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Elias' IT Services{% endblock %}
+
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block header %}
+    <header class="page-header">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="/dashboard" class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Elias' IT Services</span>
+                </a>
+                <button class="navbar-toggler" id="navbarToggler">
+                    <span class="toggler-icon">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </span>
+                </button>
+            </div>
+            <div class="navbar-menu" id="navbarMenu">
+                <div class="nav-items">
+                    <a href="/edit-profile" class="nav-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                    <a href="/kra-history" class="nav-item">
+                        <i class="fas fa-history"></i>
+                        <span>View History</span>
+                    </a>
+                    <a href="/donate" class="nav-item">
+                        <i class="fas fa-heart"></i>
+                        <span>Donate</span>
+                    </a>
+                    <a href="/logout" class="nav-item logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <div class="profile-header">
+                <div class="profile-picture">
+                    {% if user[6] %}
+                        <img src="{{ url_for('static', filename='uploads/' + user[6]) }}" alt="Profile Picture">
+                    {% else %}
+                        <div class="default-picture">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="welcome-text">
+                    <h1 class="welcome-title">Welcome, {{ user[1] }}!</h1>
+                    <p class="welcome-subtitle">Browse our available IT services below</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="services-section">
+            <h2 class="section-title">Available IT Services</h2>
+
+            {% if services %}
+                <div class="services-container">
+                    {% for service in services %}
+                        <div class="service-card">
+                            {% if service|length > 4 and service[4] %}
+                                <div class="service-image">
+                                    <img src="{{ url_for('static', filename='uploads/' + service[4]) }}" alt="{{ service[1] }}">
+                                </div>
+                            {% else %}
+                                <div class="service-image placeholder">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                            {% endif %}
+                            <div class="service-content">
+                                <div class="service-header">
+                                    <h3 class="service-title">{{ service[1] }}</h3>
+                                </div>
+                                <div class="service-body">
+                                    <p class="service-description">{{ service[2] }}</p>
+                                    <p class="service-price">
+                                        <i class="fas fa-tag"></i> KSH {{ service[3] }}
+                                    </p>
+                                </div>
+                                <div class="service-footer">
+                                    {% if service[1] == 'Type Setting' %}
+                                        <a href="{{ url_for('typesetting') }}" class="btn btn-accent service-btn">
+                                            <i class="fas fa-file-word"></i> Get Service
+                                        </a>
+                                    {% elif service[1] == 'KRA Registration' %}
+                                        <a href="{{ url_for('kra_registration') }}" class="btn btn-accent service-btn">
+                                            <i class="fas fa-file-alt"></i> Register Now
+                                        </a>
+                                    {% else %}
+                                        <a href="https://wa.me/0703973225" target="_blank" class="btn btn-accent service-btn">
+                                            <i class="fab fa-whatsapp"></i> Get Service
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-services">
+                    <i class="fas fa-info-circle"></i>
+                    <p>No services are currently available.</p>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+
+<style>
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 2rem;
+}
+
+.logo i {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.navbar-toggler {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.toggler-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler.active .toggler-icon {
+    transform: rotate(180deg);
+}
+
+.navbar-toggler.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.navbar-toggler.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggler.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.nav-item i {
+    margin-right: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-item span {
+    position: relative;
+    z-index: 1;
+}
+
+.nav-item.logout {
+    background-color: var(--danger);
+}
+
+.nav-item.logout:hover {
+    background-color: #dc3545;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar-brand {
+        width: 100%;
+    }
+
+    .logo {
+        margin-right: 0;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar-menu {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        visibility: hidden;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+
+    .navbar-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-items {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+        margin-left: 0;
+    }
+
+    .nav-item {
+        width: 100%;
+        padding: 1rem;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-item:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .nav-item i {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .nav-item span {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .nav-item.logout {
+        margin-top: 1rem;
+        background-color: var(--danger);
+    }
+
+    .nav-item::before {
+        display: none;
+    }
+}
+
+/* Add some padding to the dashboard container to account for fixed navbar */
+.dashboard-container {
+    padding-top: 60px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding-top: 60px;
+    }
+}
+
+/* History Section Styles */
+.history-section {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.history-section .section-title {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.table td {
+    color: var(--text-color);
+}
+
+.table td a {
+    color: #007bff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.table td a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .history-section {
+        padding: 1rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navbarToggler = document.getElementById('navbarToggler');
+    const navbarMenu = document.getElementById('navbarMenu');
+
+    navbarToggler.addEventListener('click', function() {
+        navbarToggler.classList.toggle('active');
+        navbarMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!navbarToggler.contains(event.target) && !navbarMenu.contains(event.target)) {
+            navbarToggler.classList.remove('active');
+            navbarMenu.classList.remove('active');
+        }
+    });
+
+    // Close menu when scrolling
+    window.addEventListener('scroll', function() {
+        navbarToggler.classList.remove('active');
+        navbarMenu.classList.remove('active');
+    });
+});
+</script>
+{% endblock %}
