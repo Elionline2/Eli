@@ -2,6 +2,10 @@ from flask import Flask, send_from_directory, render_template, session, redirect
 from it_services_section.app import app as it_services_app, mail
 from flask_mail import Mail
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv('it_services_section/manage.env')
 
 app = Flask(__name__,
             static_folder='it_services_section/static',
@@ -11,10 +15,21 @@ app = Flask(__name__,
 app.config.update(it_services_app.config)
 
 # Set secret key for session management
-app.secret_key = it_services_app.secret_key
+app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')
 
 # Initialize mail for the main app
 mail.init_app(app)
+
+# Debug mail configuration in development
+if os.getenv('FLASK_ENV') == 'development':
+    print("Mail Configuration:")
+    print(f"MAIL_SERVER: {app.config['MAIL_SERVER']}")
+    print(f"MAIL_PORT: {app.config['MAIL_PORT']}")
+    print(f"MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
+    print(f"MAIL_USE_SSL: {app.config['MAIL_USE_SSL']}")
+    print(f"MAIL_USERNAME: {app.config['MAIL_USERNAME']}")
+    print(f"MAIL_PASSWORD: {'*' * len(app.config['MAIL_PASSWORD']) if app.config['MAIL_PASSWORD'] else 'Not set'}")
+    print(f"MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
 
 # Main static index page
 @app.route('/')
