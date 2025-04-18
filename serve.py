@@ -14,17 +14,17 @@ app = Flask(__name__,
 # Set secret key for session management
 app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')
 
-# Explicitly set email configuration
+# Copy email configuration from it_services_app
 app.config.update(
-    MAIL_SERVER=os.getenv('MAIL_SERVER', 'smtp.gmail.com'),
-    MAIL_PORT=int(os.getenv('MAIL_PORT', '587')),
-    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS', 'True').lower() == 'true',
-    MAIL_USE_SSL=os.getenv('MAIL_USE_SSL', 'False').lower() == 'true',
-    MAIL_USERNAME=os.getenv('EMAIL_USER'),
-    MAIL_PASSWORD=os.getenv('EMAIL_PASS'),
-    MAIL_DEFAULT_SENDER=os.getenv('EMAIL_USER'),
-    MAIL_MAX_EMAILS=None,
-    MAIL_ASCII_ATTACHMENTS=False
+    MAIL_SERVER=it_services_app.config['MAIL_SERVER'],
+    MAIL_PORT=it_services_app.config['MAIL_PORT'],
+    MAIL_USE_TLS=it_services_app.config['MAIL_USE_TLS'],
+    MAIL_USE_SSL=it_services_app.config['MAIL_USE_SSL'],
+    MAIL_USERNAME=it_services_app.config['MAIL_USERNAME'],
+    MAIL_PASSWORD=it_services_app.config['MAIL_PASSWORD'],
+    MAIL_DEFAULT_SENDER=it_services_app.config['MAIL_DEFAULT_SENDER'],
+    MAIL_MAX_EMAILS=it_services_app.config['MAIL_MAX_EMAILS'],
+    MAIL_ASCII_ATTACHMENTS=it_services_app.config['MAIL_ASCII_ATTACHMENTS']
 )
 
 # Initialize mail for the main app
