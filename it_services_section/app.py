@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')  # Use environment variable for secret key
 
 # === File Upload Configuration ===
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
 ALLOWED_EXTENSIONS = {
     # Document files
     'txt', 'doc', 'docx', 'pdf', 'rtf', 'odt', 'pages',
@@ -31,6 +31,7 @@ ALLOWED_EXTENSIONS = {
 }
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 # === Mail Configuration ===
 app.config.update(
